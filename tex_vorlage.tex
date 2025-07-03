@@ -1,0 +1,92 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{xfp}  % für Rechnungen mit floats
+\pagestyle{empty}
+
+% --------------------------------------------------
+% Figurengrößen setzen
+\newcommand{\setfiguresize}[1]{%
+  \ifthenelse{\equal{#1}{Winzig}}{%
+    \def\cellwidth{1.25}%
+    \def\imageheight{2}%
+    \def\bufferheight{0.25}%
+  }{}
+  \ifthenelse{\equal{#1}{Klein}}{%
+    \def\cellwidth{2.0}%
+    \def\imageheight{3}%
+    \def\bufferheight{0.25}%
+  }{}
+  \ifthenelse{\equal{#1}{Mittelgroß}}{%
+    \def\cellwidth{2.5}%
+    \def\imageheight{4}%
+    \def\bufferheight{0.25}%
+  }{}
+  \ifthenelse{\equal{#1}{Groß}}{%
+    \def\cellwidth{5.0}%
+    \def\imageheight{8}%
+    \def\bufferheight{0.5}%
+  }{}
+  \ifthenelse{\equal{#1}{Riesig}}{%
+    \def\cellwidth{7.5}%
+    \def\imageheight{10}%
+    \def\bufferheight{0.5}%
+  }{}
+  \ifthenelse{\equal{#1}{Gigantisch}}{%
+    \def\cellwidth{10.0}%
+    \def\imageheight{12}%
+    \def\bufferheight{0.5}%
+  }{}
+  \def\totalheight{\fpeval{\imageheight + 2 * \bufferheight}}%
+}
+
+% --------------------------------------------------
+% Einstellungen
+\setfiguresize{Mittelgroß} % Ändere hier: Winzig, Klein, Mittelgroß, Groß, Riesig, Gigantisch
+\newcommand{\figureimages}{A.png, B.png, C.png, D.png, E.png} % Bildnamen ohne Dateiendung (.png erwartet)
+\def\spacing{0.5} % Abstand zwischen Spalten
+
+% --------------------------------------------------
+\begin{document}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+  \def\y{0} % untere Linie der Figuren
+
+  \foreach \img [count=\i] in \figureimages {
+    % Berechne X-Position für diese Figur
+    \pgfmathsetmacro{\x}{(\i - 1) * (\cellwidth)}
+    \pgfmathsetmacro{\yf}{\cellwidth}
+    \pgfmathsetmacro{\yfz}{\yf+(\cellwidth/2)}
+    \pgfmathsetmacro{\yimgz}{\yfz+\imageheight}
+    \pgfmathsetmacro{\yimgv}{\yimgz+\imageheight}
+    \pgfmathsetmacro{\yfv}{\yimgv+(\cellwidth/2)}
+
+    % Zelle zeichnen
+    \draw (\x, \yimgv) rectangle ++(\cellwidth, \cellwidth/2);
+    \draw (\x, \yimgz) rectangle ++(\cellwidth, \imageheight);
+    \draw (\x, \yfz) rectangle ++(\cellwidth, \imageheight);
+    \draw (\x, \yf) rectangle ++(\cellwidth, \cellwidth/2);
+    \draw (\x, \y) rectangle ++(\cellwidth, \cellwidth);
+
+    % Bildzetrum x
+    \pgfmathsetmacro{\ximg}{\x + \cellwidth/2}
+    % Bildzetrum y
+    \pgfmathsetmacro{\yimgz}{\yimgz+\imageheight/2}
+    \pgfmathsetmacro{\yimgv}{\yimgv-\imageheight*1.5}
+
+    % Bild oder Platzhalter
+    \IfFileExists{images/\img}{%
+        \node[anchor=center] at (\ximg, \yimgz) {\scalebox{1}[-1]{\includegraphics[width=\cellwidth cm, height=\imageheight cm, keepaspectratio]{images/\img}}};
+        \node[anchor=center] at (\ximg, \yimgv) {\scalebox{1}[1]{\includegraphics[width=\cellwidth cm, height=\imageheight cm, keepaspectratio]{images/\img}}};
+    }{%
+      \node[anchor=center] at (\ximg, \yimgz) {X};
+      \node[anchor=center] at (\ximg, \yimgv) {Y};
+    }
+  }
+
+\end{tikzpicture}
+\end{center}
+\end{document}
