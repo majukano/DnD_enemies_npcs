@@ -1,1 +1,9 @@
 *.pdf
+*.py~
+
+# Zulassen des Ordners images
+/images/
+
+# Alle Dateien innerhalb des Ordners ignorieren
+/images/*
+
