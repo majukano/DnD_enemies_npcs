@@ -1,12 +1,16 @@
 *.pdf
 *.py~
+*.png
+*.jpg
 
 # Ordner ignorieren
 venv/
 
 # Zulassen des Ordners images
 /images/
+/images_chr/
 
 # Alle Dateien innerhalb des Ordners ignorieren
 /images/*
+/images_chr/*
 
