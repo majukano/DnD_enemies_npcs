@@ -1,0 +1,10 @@
+
+Ghast/Leichenschänder
+text_2 = "RK: 13<br/>TP: 36<br/> 1,5m Vergiftet (SG10 Konst.)<br/> Angriff: Klauen +5 Tr: 10 - gelähmt (SG10 Konst.)<br/> Biss: +5 Tr: 9"
+
+Rose und Dorn
+text_1 = "- Kinder wissen nicht wie Monster aussieht<br/>- Eltern halten Monster im Keller gefangen<br/>- Baby Bruder Walter im Kinderzimmer 1. Stock<br/>- gehen nicht ins Haus<br/>-------------<br/>- Verhungert<br/>- Geheimtür im DG zum KG<br/>- Wollen nicht alleine gelassen werden."
+
+Gheist
+text_2 = "RK: 12<br/>TP: 45<br/> Angriff: Lebensentzug +4 Tr: 10 - SG10 Konst. oder TPmax - Schaden"
+

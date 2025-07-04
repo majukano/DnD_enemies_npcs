@@ -4,7 +4,7 @@ from reportlab.lib.pagesizes import landscape, A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph, Frame
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-
+from reportlab.lib.utils import ImageReader
 
 # =============================================================
 # ======================= Functions ===========================
@@ -17,8 +17,8 @@ def my_enemie_size(en_size, cm2point):
         en_width = 2 * cm2point  # cm
         en_height = 3 * cm2point  # cm
     elif en_size == "mittel":
-        en_width = 10 * cm2point  # cm
-        en_height = 6 * cm2point  # cm
+        en_width = 12 * cm2point  # cm
+        en_height = 7 * cm2point  # cm
     elif en_size == "groß":
         en_width = 5 * cm2point  # cm
         en_height = 8 * cm2point  # cm
@@ -87,13 +87,12 @@ filename = "my_rpg_charakter.pdf"
 en_size = "mittel"
 name_text_h = 20
 
+name_int = ["Dorn Durst & Rose Durst", "Geist Kindermädchen", "Name Int 3", "Name Int 4"]
+name_ext = ["Dorn & Rose", "Geist", "Name Ext 3", "Name Ext 4"]
 
-name_ext = ["Name Ext 1", "Name Ext 2", "Name Ext 3", "Name Ext 4"]
-name_int = ["Name Int 1", "Name Int 2", "Name Int 3", "Name Int 4"]
 
-
-text_1 = "Hallo text 1"
-text_2 = "Hallo text 2"
+text_1 = "- Kinder wissen nicht wie Monster aussieht<br/>- Eltern halten Monster im Keller gefangen<br/>- Baby Bruder Walter im Kinderzimmer 1. Stock<br/>- gehen nicht ins Haus<br/>-------------<br/>- Verhungert<br/>- Geheimtür im DG zum KG<br/>- Wollen nicht alleine gelassen werden."
+text_2 = "RK: 12<br/>TP: 45<br/> Angriff: Lebensentzug +4 Tr: 10 - SG10 Konst. oder TPmax - Schaden"
 text_3 = "Hallo text 3"
 text_4 = "Hallo text 4"
 
@@ -107,22 +106,22 @@ text_par = [text_1, text_2, text_3, text_4]
 par_name_ext = ParagraphStyle(
     name="MeinStil",
     fontName="Helvetica",
-    fontSize=name_text_h,  # 👈 Schriftgröße in Punkt
-    leading=20,  # 👈 Zeilenabstand (optional)
+    fontSize=name_text_h,  
+    leading=20,
 )
 
 par_text = ParagraphStyle(
     name="MeinStil",
     fontName="Helvetica",
-    fontSize=12,  # 👈 Schriftgröße in Punkt
-    leading=20,  # 👈 Zeilenabstand (optional)
+    fontSize=12,  #  Schriftgröße in Punkt
+    leading=20,  #  Zeilenabstand (optional)
 )
 
 par_name_int = ParagraphStyle(
     name="MeinStil",
     fontName="Helvetica",
-    fontSize=name_text_h,  # 👈 Schriftgröße in Punkt
-    leading=20,  # 👈 Zeilenabstand (optional)
+    fontSize=name_text_h,  #  Schriftgröße in Punkt
+    leading=20,  #  Zeilenabstand (optional)
 )
 
 
@@ -169,36 +168,41 @@ while print_width < page_width - x_pos:
     # Körper Teil 1
     y_pos = y_pos + r_height
     r_height = en_height
-    x_start = x_pos + ((en_width * (i - 1)))
     # Rechteck einzeichnen
     c.rect(x_start, y_pos, en_width, r_height)  # Körper Teil 1
     img_data = prep_images(image_path_list, en_width, en_height, i)
     img_width, img_height = get_img_size(img_data[2], en_width * 0.3, en_height)
     y_start = y_pos + r_height - img_height
     # Bild einzeichnen
-    c.drawImage(img_data[0], x_start, y_start, img_width, img_height)
+    img = ImageReader(img_data[0])
+    c.drawImage(img, x_start, y_start, img_width, img_height)
     abs_text = Paragraph(text_par[i - 1], par_text)
     frame_text = Frame(
         x_start + en_width * 0.3, y_pos, en_width - en_width * 0.3, en_height
     )
     frame_text.addFromList([abs_text], c)
 
+    # Faltmarke
+    fm_height = 1 * cm2point
+    y_pos = y_pos + en_height
+    c.rect(x_start, y_pos, en_width, fm_height)  # Faltmarke
+
     # Körper Teil 2
     r_height = r_height + en_height
-    y_pos = y_pos + en_height
+    y_pos = y_pos + fm_height
     # Rechteck Zeichnen
     c.rect(x_pos + ((en_width * (i - 1))), y_pos, en_width, en_height)  # Körper Teil 2
     img_width, img_height = get_img_size(img_data[2], en_width, en_height)
     # Bild einzeichnen
-    c.drawImage(img_data[1], x_start, y_pos, img_width, img_height)
+    img = ImageReader(img_data[1])
+    c.drawImage(img, x_start, y_pos, img_width, img_height)
 
     # Textbereich 2
     r_height = name_text_h * 1.8
     y_pos = y_pos + en_height
-    x_start = x_pos + ((en_width * (i - 1)))
     # Text rechteck zeichnen
     c.rect(x_start, y_pos, en_width, r_height)
-    abs_name_ext = Paragraph(name_int[i - 1], par_name_int)
+    abs_name_ext = Paragraph(name_ext[i - 1], par_name_int)
     c.saveState()
     c.translate(x_start + en_width / 2, y_pos + r_height / 2)
     c.rotate(180)

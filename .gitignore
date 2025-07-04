@@ -2,6 +2,7 @@
 *.py~
 *.png
 *.jpg
+*.txt~
 
 # Ordner ignorieren
 venv/
