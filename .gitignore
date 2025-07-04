@@ -1,6 +1,9 @@
 *.pdf
 *.py~
 
+# Ordner ignorieren
+venv/
+
 # Zulassen des Ordners images
 /images/
 
