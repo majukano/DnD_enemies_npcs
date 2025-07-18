@@ -124,8 +124,9 @@ while print_width < page_width - x_pos:
     img_data = prep_images(image_path_list, en_width, en_height, i)
     img_width, img_height = get_img_size(img_data[2], en_width, en_height)
     y_img = y_start + en_height - img_height
+    x_img = x_start + (en_width - img_width)/2
     img = ImageReader(img_data[0])
-    c.drawImage(img, x_start, y_img, img_width, img_height)
+    c.drawImage(img, x_img, y_img, img_width, img_height)
 
     # # Körper Teil 2
     y_start = y_start + en_height
@@ -133,7 +134,7 @@ while print_width < page_width - x_pos:
     # # Bild 2
     img = ImageReader(img_data[1])
     c.drawImage(
-        img, x_start, y_start, img_width, img_height
+        img, x_img, y_start, img_width, img_height
     )
 
     # Fuss/2 - Teil 2
