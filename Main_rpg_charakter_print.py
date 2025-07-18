@@ -87,12 +87,12 @@ filename = "my_rpg_charakter.pdf"
 en_size = "mittel"
 name_text_h = 20
 
-name_int = ["Dorn Durst & Rose Durst", "Geist Kindermädchen", "Name Int 3", "Name Int 4"]
-name_ext = ["Dorn & Rose", "Geist", "Name Ext 3", "Name Ext 4"]
+name_int = ["Modernder Schlürfer", "Grick", "Name Int 3", "Name Int 4"]
+name_ext = ["Modernder Schlürfer", "Grick", "Name Ext 3", "Name Ext 4"]
 
+text_1 = "RK: 15<br/>TP: 136<br/> Immun Blitz - wird durch Schaden geheilt<br/> Angriff: Mehrfachangriff (2) Schlag +7 Tr: 13<br/> wenn Trifft SG14 Verschligen:<br/>Ziel festgesetzt und geblendet. Jede Runde SG14-Konst. Tr. 13"
 
-text_1 = "- Kinder wissen nicht wie Monster aussieht<br/>- Eltern halten Monster im Keller gefangen<br/>- Baby Bruder Walter im Kinderzimmer 1. Stock<br/>- gehen nicht ins Haus<br/>-------------<br/>- Verhungert<br/>- Geheimtür im DG zum KG<br/>- Wollen nicht alleine gelassen werden."
-text_2 = "RK: 12<br/>TP: 45<br/> Angriff: Lebensentzug +4 Tr: 10 - SG10 Konst. oder TPmax - Schaden"
+text_2 = "RK: 14<br/>TP: 27<br/>Tarnung +4 (Versteinert SG15 Warnehmung)<br/> Angriff: Tentakel +4 Tr: 7 Wenn trifft +:<br/> Schnabel +4 Tr: 5"
 text_3 = "Hallo text 3"
 text_4 = "Hallo text 4"
 
