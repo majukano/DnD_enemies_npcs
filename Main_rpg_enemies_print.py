@@ -2,12 +2,12 @@ import os
 from PIL import Image, ImageOps
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
 
 
 # =============================================================
 # ======================= Functions ===========================
 # =============================================================
-
 
 # Gebe Bildgröße der Gegner aus
 def my_enemie_size(en_size, cm2point):
@@ -79,7 +79,6 @@ image_folder = "images"
 # ======================== Setup ==============================
 # =============================================================
 
-
 # Lege den Dateinamen der PDF fest
 filename = "my_rpg_enemies.pdf"
 en_size = "mittel"
@@ -89,14 +88,12 @@ en_size = "mittel"
 # ========================== images ===========================
 # =============================================================
 
-
 image_path_list = get_image_paths(image_folder)
 
 
 # =============================================================
 # =================== PDF Generator ===========================
 # =============================================================
-
 
 # Erstelle ein Canvas-Objekt für die PDF
 c = canvas.Canvas(
@@ -116,7 +113,6 @@ while print_width < page_width - x_pos:
     x_start = x_pos + ((en_width * (i - 1)))
     print_width = print_width + en_width
     r_height = en_width / 2
-    r_h_fuss = en_width / 2
 
     # Fuss/2 Teil 1
     c.rect(x_start, y_pos, en_width, r_height)  # Fuss Teil 1
@@ -128,14 +124,16 @@ while print_width < page_width - x_pos:
     img_data = prep_images(image_path_list, en_width, en_height, i)
     img_width, img_height = get_img_size(img_data[2], en_width, en_height)
     y_img = y_start + en_height - img_height
-    c.drawImage(img_data[0], x_start, y_img, img_width, img_height)
+    img = ImageReader(img_data[0])
+    c.drawImage(img, x_start, y_img, img_width, img_height)
 
     # # Körper Teil 2
     y_start = y_start + en_height
     c.rect(x_start, y_start, en_width, en_height)  # Körper Teil 2
     # # Bild 2
+    img = ImageReader(img_data[1])
     c.drawImage(
-        img_data[1], x_start, y_start, img_width, img_height
+        img, x_start, y_start, img_width, img_height
     )
 
     # Fuss/2 - Teil 2
