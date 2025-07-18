@@ -113,31 +113,38 @@ i = 0
 print_width = x_pos + en_width
 while print_width < page_width - x_pos:
     i += 1
+    x_start = x_pos + ((en_width * (i - 1)))
     print_width = print_width + en_width
     r_height = en_width / 2
     r_h_fuss = en_width / 2
-    c.rect(x_pos + ((en_width * (i - 1))), y_pos, en_width, r_height)  # Fuss Teil 1
+
+    # Fuss/2 Teil 1
+    c.rect(x_start, y_pos, en_width, r_height)  # Fuss Teil 1
 
     # Körper Teil 1
-    r_height = r_height + en_height
-    x_start = x_pos + ((en_width * (i - 1)))
-    c.rect(x_start, y_pos, en_width, r_height)  # Körper Teil 1
+    y_start = y_pos + r_height
+    c.rect(x_start, y_start, en_width, en_height)  # Körper Teil 1
+    # Bild 1
     img_data = prep_images(image_path_list, en_width, en_height, i)
     img_width, img_height = get_img_size(img_data[2], en_width, en_height)
-    y_start = y_pos + r_h_fuss + en_height - img_height
-    c.drawImage(img_data[0], x_start, y_start, img_width, img_height)
+    y_img = y_start + en_height - img_height
+    c.drawImage(img_data[0], x_start, y_img, img_width, img_height)
 
-    # Körper Teil 2
-    r_height = r_height + en_height
-    c.rect(x_pos + ((en_width * (i - 1))), y_pos, en_width, r_height)  # Körper Teil 2
+    # # Körper Teil 2
+    y_start = y_start + en_height
+    c.rect(x_start, y_start, en_width, en_height)  # Körper Teil 2
+    # # Bild 2
     c.drawImage(
-        img_data[1], x_start, y_pos + r_h_fuss + en_height, img_width, img_height
+        img_data[1], x_start, y_start, img_width, img_height
     )
 
-    r_height = r_height + en_width / 2
-    c.rect(x_pos + ((en_width * (i - 1))), y_pos, en_width, r_height)  # Fuss Teil 2
-    r_height = r_height + en_width
-    c.rect(x_pos + ((en_width * (i - 1))), y_pos, en_width, r_height)  # Fuss Teil 3
+    # Fuss/2 - Teil 2
+    y_start = y_start + en_height
+    c.rect(x_start, y_start, en_width, r_height)  # Fuss Teil 2
+
+    # Fuss 
+    y_start = y_start + r_height
+    c.rect(x_start, y_start, en_width, en_width)  # Fuss Teil 3
 
 
 # Speichere die leere Seite
